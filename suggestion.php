@@ -1,0 +1,140 @@
+<?php
+
+include "db.php";
+session_start();
+	if(!isset($_SESSION["ID"]))
+	{
+		echo"<script>window.open('login.php?mes=Access Denied...','_self');</script>";
+		
+  }
+  
+  
+
+
+?>
+
+
+
+<html>
+    <head>
+        <title>MCET</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+       <link rel="stylesheet" href="css/style.css">
+
+
+    </head>
+    <body>
+             
+      <nav class="navbar navbar-light bg-light">
+     <a class="navbar-brand" href="#">
+      <img src="images/m.png" width="130" height="50"  style="margin-left: 25px;"  class="d-inline-block align-top" alt="">
+     
+     </a>
+     <div >  
+     <a href =""   ><button type="button"  style="margin-right: 10px;"  class="btn btn-success"><?php echo $_SESSION["NAME"];?></button></a>
+    
+     <a href ="logout.php"   ><button type="button"  id="but"  class="btn btn-secondary">LOGOUT</button></a>
+     </div>
+
+     </nav>
+
+    
+     <div class=container   style="float: right;" >
+
+     <h1 id="header" >SUGESSTION </h1>
+
+
+        
+
+
+<?php
+
+
+
+
+
+
+      if(isset($_POST["submit"]))
+              {
+
+     
+  $sql="INSERT INTO suggestion( UID, SERVICE, CONTENT, TIME,STATUS,ETIME,DELETS,ASTATUS)
+  values({$_SESSION["ID"]},'{$_POST["Service"]}','{$_POST["content"]}',now(),'Suggested',NOW() + INTERVAL 5 MINUTE,'DELETE?','NEW SUGGESTION')";
+ 
+    if ($db->query($sql)) {
+      echo "<div class='sucess'> SUGGESTED </div>";
+    } 
+  }
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+?>
+
+
+
+
+
+         <form action="suggestion.php" method="post">
+
+          <div >                
+             <ul>
+           <li style = "margin-right:80%;margin-top: 50px;list-style: none;">
+             <select  name="Service"  class="form-control rounded-pill form-control-lg" required>
+             <option value="">Service</option>
+             <option value="CIVIL">DIPOT ORDER</option>
+             <option value="MECH">HALL BOOKING</option>
+             </select>
+             </li>
+
+            
+
+
+
+        
+
+         <li style = "margin-right:50%;margin-top: 20px;list-style: none;">
+           <textarea class="form-control" placeholder="Purpose" name="content"  rows="3"></textarea>
+         
+         </li>
+        
+       
+         </ul>
+         </div>
+        
+         <div class="text-center">
+         <button  style = "margin-right:90%; margin-top:20px;"type="submit"   id= "reg" name="submit">Suggest! </button>
+         </div>
+
+         </form>
+
+     
+       
+    </div>
+ 
+     
+    <div class="wrapper">
+        
+       <?php include "usersidebar.php"; ?>
+       
+    </div>
+
+    
+    <div class="container" id="footer" >
+      <?php include "footer.php"; ?>
+    </div>
+
+  </body>
+</html>
